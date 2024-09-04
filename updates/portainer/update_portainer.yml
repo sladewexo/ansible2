@@ -1,6 +1,6 @@
 ---
 - name: Upgrade Portainer on AdGuard Home LXC container in Proxmox
-  hosts: portainer
+  hosts: Portainer-Server
   become: yes
   tasks:
     - name: Stop Portainer
