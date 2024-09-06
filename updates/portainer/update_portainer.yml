@@ -1,16 +1,18 @@
 ---
-- name: Upgrade Portainer Server
-  hosts: Portainer-Server
-  become: true
-  tasks:
-    - name: Stop Portainer
-      shell: docker stop portainer
-
-    - name: Remove Portainer
-      shell: docker rm portainer
-
-    - name: Download newest Portainer 
-      shell: docker pull portainer/portainer-ee::latest 
-
-    - name: Run Portainer 
-      shell: docker run -d -p 8000:8000 -p 9443:9443 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ee:latest
+- name: Finer container restart/update control
+  community.docker.docker_container:
+    name: portainer
+    image: portainer-ee:latest
+    env:
+      arg1: "true"
+      arg2: "whatever"
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8000:8000 
+      - 9443:9443
+    comparisons:
+      image: ignore   # do not restart containers with older versions of the image
+      env: strict   # we want precisely this environment
+      volumes: allow_more_present   # if there are more volumes, that's ok, as long as `/tmp:/tmp` is there
