@@ -1,27 +1,42 @@
 ---
-- name: Update and upgrade apt packages
-  hosts: all
-
+- hosts: yum
   tasks:
-    - name: Update packages with apt
-      when: ansible_pkg_mgr == 'apt'
-      ansible.builtin.apt:
-        update_cache: true
+  - name: Update all installed packages using YUM module
+    yum:
+      name: '*'
+      state: latest
+      update_cache: yes
+      update_only: yes
+    register: yum_update_status
 
-    - name: Update packages with yum
-      when: ansible_pkg_mgr == 'yum'
-      ansible.builtin.yum:
-        name: '*'
-        state: latest # noqa: package-latest
+  - name: Remove packates not needed anymore
+    yum:
+      autoremove: yes
 
-    - name: Upgrade packages with apt
-      when: ansible_pkg_mgr == 'apt'
-      ansible.builtin.apt:
-        upgrade: dist
+  - name: Reboot when packages were updated
+    reboot:
+    when: yum_update_status.changed
 
-    - name: Upgrade packages with yum
-      when: ansible_pkg_mgr == 'yum'
-      ansible.builtin.yum:
-        name: '*'
-        state: latest # noqa: package-latest
-        exclude: kernel*
+- hosts: apt
+  tasks:
+  - name: Update all installed packages using APT module
+    apt:
+      name: '*'
+      state: latest
+      update_cache: yes
+      only_upgrade: yes
+    register: apt_update_status
+
+  - name: Remove packages not needed anymore
+    apt:
+      autoremove: yes
+
+  - name: Reboot when packages were updated
+    reboot:
+      post_reboot_delay: 60
+    when: apt_update_status.changed
+
+- hosts: ipkg
+  tasks:
+  - name: Update the Packages installed on Diskstation
+    command: /opt/bin/ipkg update && /opt/bin/ipkg upgrade
