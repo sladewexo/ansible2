@@ -1,18 +1,20 @@
 ---
-- name: Finer container restart/update control
-  community.docker.docker_container:
-    name: portainer
-    image: portainer-ee:latest
-    env:
-      arg1: "true"
-      arg2: "whatever"
-    volumes:
-      - portainer_data:/data
-      - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 8000:8000 
-      - 9443:9443
-    comparisons:
-      image: ignore   # do not restart containers with older versions of the image
-      env: strict   # we want precisely this environment
-      volumes: allow_more_present   # if there are more volumes, that's ok, as long as `/tmp:/tmp` is there
+- hosts: all
+  tasks:
+  - name: Finer container restart/update control
+    community.docker.docker_container:
+      name: portainer
+      image: portainer-ee:latest
+      env:
+        arg1: "true"
+        arg2: "whatever"
+      volumes:
+        - portainer_data:/data
+        - /var/run/docker.sock:/var/run/docker.sock
+      ports:
+        - 8000:8000 
+        - 9443:9443
+      comparisons:
+        image: ignore   # do not restart containers with older versions of the image
+        env: strict   # we want precisely this environment
+        volumes: allow_more_present   # if there are more volumes, that's ok, as long as `/tmp:/tmp` is there
