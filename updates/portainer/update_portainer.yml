@@ -4,7 +4,7 @@
   become: yes
   tasks:
     - name: Stop Portainer
-      shell: sudo docker stop portainer 
+      shell: sudo docker stop portainer
 
     - name: Remove Portainer
       shell: sudo docker rm portainer
