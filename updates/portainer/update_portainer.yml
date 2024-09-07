@@ -1,6 +1,6 @@
 ---
 - name: Finer container restart/update control
-  hosts: all
+    hosts: all
     community.docker.docker_container:
       name: portainer
       image: portainer-ee:latest
