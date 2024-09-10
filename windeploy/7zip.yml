@@ -2,7 +2,7 @@
 - name: Install 7-Zip package
   hosts: all
 
-tasks:
+  tasks:
   - name: Install MSI
     win_package:
     path: c:\tmp\7z2408-x64.msi
