@@ -1,7 +1,4 @@
 ---
-- name: Install 7-Zip package
-  hosts: wink
-
   tasks:
     - name: Install 7-Zip
       ansible.windows.win_package:
