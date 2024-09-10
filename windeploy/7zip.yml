@@ -4,7 +4,7 @@
 
   tasks:
   - name: Install MSI
-    ansible.windows.win_package:
+    win_package:
     path: c:\tmp\7z2408-x64.msi
     product_id: 7-Zip
     state: present
