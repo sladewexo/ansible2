@@ -3,8 +3,8 @@
   hosts: all
 
   tasks:
-  - name: Install MSI
-    win_package:
-    path: c:\tmp\7z2408-x64.msi
-    product_id: 7-Zip
-    state: present
+   - name: Install MSI
+     win_package:
+     path: c:\tmp\7z2408-x64.msi
+     product_id: 7-Zip
+     state: present
