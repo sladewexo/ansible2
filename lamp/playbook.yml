@@ -6,17 +6,17 @@
   
   tasks:
   
-  - name: Install a list of packages
+         - name: Install a list of packages
   
-    ansible.builtin.yum:
-    name:
-      - httpd
-      - mysql-server
-      - php5-cli
-      - php5-curl
-      - php5-fpm
-      - php5-intl
-      - php5-json
-      - php5-mcrypt
-      - php5-sqlite
-    state: present
+           ansible.builtin.yum:
+           name:
+                 - httpd
+                 - mysql-server
+                 - php5-cli
+                 - php5-curl
+                 - php5-fpm
+                 - php5-intl
+                 - php5-json
+                 - php5-mcrypt
+                 - php5-sqlite
+            state: present
