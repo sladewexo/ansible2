@@ -19,5 +19,4 @@
                  - php5-json
                  - php5-mcrypt
                  - php5-sqlite
-
             state: present
