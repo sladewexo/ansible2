@@ -2,7 +2,8 @@
 - hosts: all
   become: true
   become_method: sudo
-  - name: Install a list of packages (suitable replacement for 2.11 loop deprecation warning)
+  tasks:
+  - name: Install a list of packages
     ansible.builtin.yum:
     name:
       - httpd
